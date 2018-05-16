@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Demo frontend</title>
+    <link href="bootstrap.css" rel="stylesheet">
+
+	<style>
+		body {
+			padding:20px;
+		}
+		.username-msg {color:orange;}
+		.connect-msg {color:green;}
+		.disconnect-msg {color:red;}
+		.send-msg {color:#888}
+	</style>
+
+	<script src="js/socket.io/socket.io.js"></script>
+    <script src="js/moment.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+	<script>
+		var socket =  io.connect('http://localhost:9092');
+
+		socket.on('connect', function() {
+			console.log('socket is connected');
+		});
+
+		socket.on('event', function(data) {
+			console.log(JSON.parse(data));
+			//console.log(data);
+		});
+
+		socket.on('disconnect', function() {
+			console.log('Socket leave');
+
+		});
+
+        function sendDisconnect() {
+            socket.emit('disconnect', "");
+            socket.disconnect();
+        }
+
+		function sendMessage() {
+            var jsonObject = {
+                user: "123",
+                nickname: "123"
+            };
+            socket.emit('event', jsonObject);
+		}
+	</script>
+</head>
+
+<body>
+    <form class="well form-inline" onsubmit="return false;">
+       <button type="button" onClick="sendMessage()" class="btn" id="send">Send</button>
+       <button type="button" onClick="sendDisconnect()" class="btn">Disconnect</button>
+    </form>
+</body>
+
+</html>
