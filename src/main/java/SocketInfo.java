@@ -12,7 +12,7 @@ public class SocketInfo {
     public SocketInfo() {
     }
 
-    public SocketInfo(String user, String nickname, String trackURL, String trackTitle, String trackAuthor, String trackArtURL, String trackPreviewURL, String trackFullURL, double latitude, double longitube) {
+    public SocketInfo(String user, String nickname, String trackTitle, String trackAuthor, String trackArtURL, String trackPreviewURL, String trackFullURL, double latitude, double longitube) {
         super();
         this.user = user;
         this.nickname = nickname;

@@ -1,4 +1,7 @@
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.Vector;
 import java.util.concurrent.Callable;
 
@@ -41,13 +44,14 @@ public class ServerLaunch {
         config.setHostname("localhost");
         config.setPort(9092);
 
-        // A vector in which stored sockets
-        Vector clients = new Vector();
-//        for (int i = 1; i< 5; i++) {
-//        	ChatObject Ch = new ChatObject("user"+i, Integer.toString(i));
-//        	clients.add(Ch);
-//        }
-//        System.out.println(clients.toString());
+        // A list in which stored sockets
+        final ArrayList<SocketInfo> soc = new ArrayList<SocketInfo>();
+
+        // TODO: Написать тестовые сокеты с реальными данными
+        for (int i = 1; i< 5; i++) {
+        	SocketInfo socket = new SocketInfo("user"+i, "nickname"+i, "trackTitle"+i, "trackAuthor"+i, "trackArtURL"+i, "trackPreviewURL"+i, "trackFullURL"+i, (double)i,(double)i);
+            soc.add(socket);
+        }
 
         // Create socket-server
         final SocketIOServer server = new SocketIOServer(config);
@@ -82,6 +86,29 @@ public class ServerLaunch {
             }
         });
 
+        server.addEventListener("updateContent", SocketInfo.class, new DataListener<SocketInfo>() {
+            public void onData(SocketIOClient client, SocketInfo data, AckRequest ackRequest) {
+                Collection<JSONObject> items = new ArrayList<JSONObject>();
+
+                for (SocketInfo socket : soc){
+
+                    // TODO: реализовать алгоритм фильтрования сокетов по расстоянию.
+                    JSONObject newClient = new JSONObject();
+                    newClient.put("user", socket.getUser());
+                    newClient.put("nickname", socket.getNickname());
+                    newClient.put("trackTitle", socket.getTrackTitle());
+                    newClient.put("trackAuthor", socket.getTrackAuthor());
+                    newClient.put("trackArtURL", socket.getTrackArtURL());
+                    newClient.put("trackPreviewURL", socket.getTrackPreviewURL());
+                    newClient.put("trackFullURL", socket.getTrackFullURL());
+                    newClient.put("latitube", socket.getLatitude());
+                    newClient.put("longtube", socket.getLongitube());
+                    items.add(newClient);
+                }
+
+                server.getBroadcastOperations().sendEvent("updateContent", items.toString());
+            }
+        });
 
         server.addEventListener("disconnect", SocketInfo.class, new DataListener<SocketInfo>() {
             public void onData(SocketIOClient client, SocketInfo data, AckRequest ackRequest) {
