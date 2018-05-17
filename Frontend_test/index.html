@@ -39,6 +39,10 @@
 		    console.log(JSON.parse(data));
 		});
 
+        socket.on('getRegional', function(data) {
+            console.log(JSON.parse(data));
+        });
+
         function sendDisconnect() {
             socket.emit('disconnect', "");
             socket.disconnect();
@@ -46,8 +50,8 @@
 
 		function sendMessage() {
             var jsonObject = {
-                trackTitle: document.getElementById("track_title").value,
-                trackAuthor: document.getElementById("track_author").value,
+                title: document.getElementById("track_title").value,
+                artist: document.getElementById("track_author").value,
                 latitude: document.getElementById('latitude').value,
                 longitude: document.getElementById('longitude').value
             };
