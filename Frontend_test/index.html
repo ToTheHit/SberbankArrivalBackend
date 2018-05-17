@@ -53,7 +53,11 @@
 		}
 
         function sendUpdateContent() {
-            socket.emit('updateContent');
+            var jsonObject = {
+                latitude: 56.151112,
+                longitude: 44.187214
+            };
+            socket.emit('updateContent', jsonObject);
         }
 
 	</script>

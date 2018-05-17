@@ -18,8 +18,9 @@ import com.neovisionaries.i18n.CountryCode;
 import me.tobiadeyinka.itunessearch.search.MediaSearch;
 import sun.misc.Unsafe;
 
-public class ServerLaunch {
 
+public class ServerLaunch {
+    final static int maxDistance = 100;
     public static void disableWarning() {
         try {
             Field theUnsafe = Unsafe.class.getDeclaredField("theUnsafe");
@@ -49,7 +50,7 @@ public class ServerLaunch {
 
         /*
         for (int i = 1; i< 5; i++) {
-        	SocketInfo socket = new SocketInfo("user"+i, "nickname"+i, "trackTitle"+i, "trackAuthor"+i, "trackMiniArtURL"+i,"trackArtURL"+i, "trackPreviewURL"+i, "trackFullURL"+i, (double)i,(double)i);
+        	SocketInfo socket = new SocketInfo("user"+i, "nickname"+i, "trackTitle"+i, "trackAuthor"+i, "trackMiniArtURL"+i,"trackArtURL"+i, "trackPreviewURL"+i, "trackFullURL"+i, 56.151723,44.187750 );
             soc.add(socket);
         }*/
 
@@ -99,21 +100,35 @@ public class ServerLaunch {
                 Collection<JSONObject> items = new ArrayList<JSONObject>();
                 for (SocketInfo socket : soc){
 
-                    // TODO: реализовать алгоритм фильтрования сокетов по расстоянию.
-                    JSONObject newClient = new JSONObject();
-                    newClient.put("user", socket.getUser());
-                    newClient.put("nickname", socket.getNickname());
-                    newClient.put("trackTitle", socket.getTrackTitle());
-                    newClient.put("trackAuthor", socket.getTrackAuthor());
-                    newClient.put("trackArtURL", socket.getTrackArtURL());
-                    newClient.put("trackPreviewURL", socket.getTrackPreviewURL());
-                    newClient.put("trackFullURL", socket.getTrackFullURL());
-                    newClient.put("latitube", socket.getLatitude());
-                    newClient.put("longitude", socket.getLongitude());
-                    items.add(newClient);
+                    double distance = measure(socket.getLatitude(), socket.getLongitude(), data.getLatitude(), data.getLongitude());
+                    if (distance < maxDistance) {
+                        JSONObject newClient = new JSONObject();
+                        newClient.put("user", socket.getUser());
+                        newClient.put("nickname", socket.getNickname());
+                        newClient.put("trackTitle", socket.getTrackTitle());
+                        newClient.put("trackAuthor", socket.getTrackAuthor());
+                        newClient.put("artwork150", socket.getArtwork150());
+                        newClient.put("artwork500", socket.getArtwork500());
+                        newClient.put("trackPreviewURL", socket.getTrackPreviewURL());
+                        newClient.put("trackFullURL", socket.getTrackFullURL());
+                        newClient.put("latitude", socket.getLatitude());
+                        newClient.put("longitude", socket.getLongitude());
+                        items.add(newClient);
+                    }
                 }
-
                 server.getBroadcastOperations().sendEvent("updateContent", items.toString());
+            }
+
+            double measure (double lat1, double lon1, double lat2, double lon2) {
+                double R = 6378.137;
+                double dLat = lat2 * Math.PI / 180 - lat1 * Math.PI / 180;
+                double dLon = lon2 * Math.PI / 180 - lon1 * Math.PI / 180;
+                double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                                Math.sin(dLon/2) * Math.sin(dLon/2);
+                double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+                double d = R * c;
+                return d * 1000;
             }
         });
 

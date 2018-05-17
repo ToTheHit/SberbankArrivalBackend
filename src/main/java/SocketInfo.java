@@ -3,8 +3,8 @@ public class SocketInfo {
     private String nickname;
     private String trackTitle;
     private String trackAuthor;
-    private String trackMiniArtURL; // 150x150
-    private String trackArtURL; // 500x500
+    private String artwork150; // 150x150
+    private String artwork500; // 500x500
     private String trackPreviewURL;
     private String trackFullURL;
     private double latitude;
@@ -13,14 +13,14 @@ public class SocketInfo {
     public SocketInfo() {
     }
 
-    public SocketInfo(String user, String nickname, String trackTitle, String trackAuthor, String trackMiniArtURL, String trackArtURL, String trackPreviewURL, String trackFullURL, double latitude, double longitude) {
+    public SocketInfo(String user, String nickname, String trackTitle, String trackAuthor, String artwork150, String artwork500, String trackPreviewURL, String trackFullURL, double latitude, double longitude) {
         super();
         this.user = user;
         this.nickname = nickname;
         this.trackTitle = trackTitle;
         this.trackTitle = trackAuthor;
-        this.trackMiniArtURL = trackMiniArtURL;
-        this.trackArtURL = trackArtURL;
+        this.artwork150 = artwork150;
+        this.artwork500 = artwork500;
         this.trackPreviewURL = trackPreviewURL;
         this.trackFullURL = trackFullURL;
         this.latitude = latitude;
@@ -48,18 +48,18 @@ public class SocketInfo {
         this.trackFullURL = trackFullURL;
     }
 
-    public String getTrackMiniArtURL() {
-        return trackMiniArtURL;
+    public String getArtwork150() {
+        return artwork150;
     }
-    public void setTrackMiniArtURL(String trackMiniArtURL) {
-        this.trackMiniArtURL = trackMiniArtURL;
+    public void setArtwork150(String artwork150) {
+        this.artwork150 = artwork150;
     }
 
-    public String getTrackArtURL() {
-        return trackArtURL;
+    public String getArtwork500() {
+        return artwork500;
     }
-    public void setTrackArtURL(String trackArtURL) {
-        this.trackArtURL = trackArtURL;
+    public void setArtwork500(String artwork500) {
+        this.artwork500 = artwork500;
     }
 
     public String getUser() {
@@ -96,6 +96,5 @@ public class SocketInfo {
     public void setLongitube(double longitude) {
         this.longitude = longitude;
     }
-
 }
 
