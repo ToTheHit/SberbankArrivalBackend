@@ -61,26 +61,7 @@ public class ServerLaunch {
         SocketInfo socket3 = new SocketInfo("User 3", "", "Got Me Thinking (feat. Veela)", "Maduk", "","","", "https://is4-ssl.mzstatic.com/image/thumb/Music71/v4/3b/c1/49/3bc149c4-c827-d5c6-eb09-0c830acf0a05/source/300x300bb.jpg", "https://audio-ssl.itunes.apple.com/apple-assets-us-std-000001/AudioPreview71/v4/be/4d/a2/be4da28f-be61-6930-50aa-ae70c4b59096/mzaf_5872772549499558060.plus.aac.p.m4a", "https://itunes.apple.com/ru/album/got-me-thinking-feat-veela/1179453307?i=1179453661&l=en&uo=4",56.151112, 44.187214);
         soc_near.add(socket3);
 
-        /*SocketInfo socket1_reg = new SocketInfo(
-                "",
-                "",
-                "Monsoon",
-                "Vitaliy Ghost",
-                "Vitaliy Ghost",
-                "Monsoon - Single",
-                "Dance",
-                "https://is1-ssl.mzstatic.com/image/thumb/Music/v4/60/54/40/605440ae-dc7f-2a83-5f42-b6ee638af50b/source/300x300bb.jpg",
-                "https://audio-ssl.itunes.apple.com/apple-assets-us-std-000001/Music/88/4e/ad/mzi.snbxbbwk.aac.p.m4a",
-                "https://itunes.apple.com/ru/album/monsoon/554581891?i=554582034&l=en&uo=4",
-                56.151112, 44.187214
-        );
-        soc_region.add(socket1_reg);
-
-        SocketInfo socket2_reg = new SocketInfo(
-                "",
-                "",
-
-        );*/
+        //Add popular tracks in RU region when server starts
         addRegionalTracks(soc_region);
 
         // Create socket-server
@@ -103,6 +84,7 @@ public class ServerLaunch {
                 Awaitility.await().until(waitPrepared(tracks));
 
 
+                deletePreviousTrack(data.getUser(), soc_near);
                 addTrack(tracks, data, soc_near);
 
                 server.getBroadcastOperations().sendEvent("event", tracks.toString());
@@ -207,6 +189,17 @@ public class ServerLaunch {
                 data.getLongitude()
         );
         soc_near.add(socket);
+    }
+
+    static void deletePreviousTrack(String user, ArrayList<SocketInfo> soc_near) {
+        Iterator<SocketInfo> i = soc_near.iterator();
+        while (i.hasNext()) {
+            SocketInfo s = i.next();
+            if(s.getUser().equals(user)) {
+                System.out.println(s.getTitle());
+                i.remove();
+            }
+        }
     }
 
     public static void addRegionalTracks(ArrayList<SocketInfo> soc_region) {
