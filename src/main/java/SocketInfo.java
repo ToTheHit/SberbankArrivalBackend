@@ -18,7 +18,7 @@ public class SocketInfo {
         this.user = user;
         this.nickname = nickname;
         this.trackTitle = trackTitle;
-        this.trackTitle = trackAuthor;
+        this.trackAuthor = trackAuthor;
         this.artwork150 = artwork150;
         this.artwork500 = artwork500;
         this.trackPreviewURL = trackPreviewURL;
