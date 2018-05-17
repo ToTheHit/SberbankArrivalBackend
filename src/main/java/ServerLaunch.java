@@ -48,18 +48,13 @@ public class ServerLaunch {
 
         // A list in which stored sockets
         final ArrayList<SocketInfo> soc = new ArrayList<SocketInfo>();
-        /*
-        for (int i = 1; i< 5; i++) {
-        	SocketInfo socket = new SocketInfo("user"+i, "nickname"+i, "trackTitle"+i, "trackAuthor"+i, "trackMiniArtURL"+i,"trackArtURL"+i, "trackPreviewURL"+i, "trackFullURL"+i, 56.151723,44.187750 );
-            soc.add(socket);
-        }*/
 
         //TODO: Заменить широту и долготу
-        SocketInfo socket1 = new SocketInfo("User 1", "", "Gucci Gang", "Lil Pump", "https://is2-ssl.mzstatic.com/image/thumb/Music128/v4/17/13/93/171393f6-a2cc-aa0e-c5af-fe63a160a0b3/source/150x150bb.jpg", "https://is2-ssl.mzstatic.com/image/thumb/Music128/v4/17/13/93/171393f6-a2cc-aa0e-c5af-fe63a160a0b3/source/500x500bb.jpg", "https://audio-ssl.itunes.apple.com/apple-assets-us-std-000001/AudioPreview118/v4/8c/1a/b3/8c1ab302-b814-e148-b249-b16d3566121d/mzaf_1290930189139201618.plus.aac.p.m4a", "https://itunes.apple.com/ru/album/gucci-gang/1292381888?i=1292381954&l=en&uo=4", 56.151112, 44.187214);
+        SocketInfo socket1 = new SocketInfo("User 1", "", "Gucci Gang", "Lil Pump", "","","", "https://is2-ssl.mzstatic.com/image/thumb/Music128/v4/17/13/93/171393f6-a2cc-aa0e-c5af-fe63a160a0b3/source/300x300bb.jpg", "https://audio-ssl.itunes.apple.com/apple-assets-us-std-000001/AudioPreview118/v4/8c/1a/b3/8c1ab302-b814-e148-b249-b16d3566121d/mzaf_1290930189139201618.plus.aac.p.m4a", "https://itunes.apple.com/ru/album/gucci-gang/1292381888?i=1292381954&l=en&uo=4", 56.151112, 44.187214);
         soc.add(socket1);
-        SocketInfo socket2 = new SocketInfo("User 2", "", "Esskeetit", "Lil Pump", "https://is4-ssl.mzstatic.com/image/thumb/Music128/v4/7b/77/7f/7b777f07-d973-6163-375a-400f77eae771/source/150x150bb.jpg", "https://is4-ssl.mzstatic.com/image/thumb/Music128/v4/7b/77/7f/7b777f07-d973-6163-375a-400f77eae771/source/500x500bb.jpg", "https://audio-ssl.itunes.apple.com/apple-assets-us-std-000001/AudioPreview118/v4/d9/c0/e8/d9c0e81a-c7da-ebbb-2557-fd7c63749110/mzaf_7518946094717781395.plus.aac.p.m4a", "https://itunes.apple.com/ru/album/esskeetit/1370438300?i=1370438305&l=en&uo=4", 56.151112, 44.187214);
+        SocketInfo socket2 = new SocketInfo("User 2", "", "Esskeetit", "Lil Pump","","","", "https://is4-ssl.mzstatic.com/image/thumb/Music128/v4/7b/77/7f/7b777f07-d973-6163-375a-400f77eae771/source/300x150bb.jpg", "https://audio-ssl.itunes.apple.com/apple-assets-us-std-000001/AudioPreview118/v4/d9/c0/e8/d9c0e81a-c7da-ebbb-2557-fd7c63749110/mzaf_7518946094717781395.plus.aac.p.m4a", "https://itunes.apple.com/ru/album/esskeetit/1370438300?i=1370438305&l=en&uo=4", 56.151112, 44.187214);
         soc.add(socket2);
-        SocketInfo socket3 = new SocketInfo("User 3", "", "Got Me Thinking (feat. Veela)", "Maduk", "https://is4-ssl.mzstatic.com/image/thumb/Music71/v4/3b/c1/49/3bc149c4-c827-d5c6-eb09-0c830acf0a05/source/150x150bb.jpg", "https://is4-ssl.mzstatic.com/image/thumb/Music71/v4/3b/c1/49/3bc149c4-c827-d5c6-eb09-0c830acf0a05/source/500x500bb.jpg","https://audio-ssl.itunes.apple.com/apple-assets-us-std-000001/AudioPreview71/v4/be/4d/a2/be4da28f-be61-6930-50aa-ae70c4b59096/mzaf_5872772549499558060.plus.aac.p.m4a", "https://itunes.apple.com/ru/album/got-me-thinking-feat-veela/1179453307?i=1179453661&l=en&uo=4",56.151112, 44.187214);
+        SocketInfo socket3 = new SocketInfo("User 3", "", "Got Me Thinking (feat. Veela)", "Maduk", "","","", "https://is4-ssl.mzstatic.com/image/thumb/Music71/v4/3b/c1/49/3bc149c4-c827-d5c6-eb09-0c830acf0a05/source/300x300bb.jpg", "https://audio-ssl.itunes.apple.com/apple-assets-us-std-000001/AudioPreview71/v4/be/4d/a2/be4da28f-be61-6930-50aa-ae70c4b59096/mzaf_5872772549499558060.plus.aac.p.m4a", "https://itunes.apple.com/ru/album/got-me-thinking-feat-veela/1179453307?i=1179453661&l=en&uo=4",56.151112, 44.187214);
         soc.add(socket3);
 
         // Create socket-server
@@ -71,7 +66,7 @@ public class ServerLaunch {
                 // Track search
                 // Information about plugin: https://github.com/EtherealT/ItunesSearch
                 tracks = new MediaSearch()
-                        .with(data.getTrackAuthor() + " " + data.getTrackTitle())
+                        .with(data.getArtist() + " " + data.getTitle())
                         .inCountry(CountryCode.RU)
                         .withLimit(1)
                         .execute();
@@ -102,26 +97,23 @@ public class ServerLaunch {
                 for (SocketInfo socket : soc){
 
                     double distance = measure(socket.getLatitude(), socket.getLongitude(), data.getLatitude(), data.getLongitude());
-                    System.out.println(socket.getLatitude());
-                    System.out.println(socket.getLongitude());
-                    System.out.println(data.getLatitude());
-                    System.out.println(data.getLongitude());
-                    if (distance < maxDistance) {
+
+//                    if (distance < maxDistance) {
                         JSONObject newClient = new JSONObject();
                         newClient.put("user", socket.getUser());
                         newClient.put("nickname", socket.getNickname());
-                        newClient.put("trackTitle", socket.getTrackTitle());
-                        newClient.put("trackAuthor", socket.getTrackAuthor());
-                        newClient.put("artwork150", socket.getArtwork150());
-                        newClient.put("artwork500", socket.getArtwork500());
+                        newClient.put("trackTitle", socket.getTitle());
+                        newClient.put("trackAuthor", socket.getArtist());
+                        newClient.put("artwork150", socket.getArtwork());
                         newClient.put("trackPreviewURL", socket.getTrackPreviewURL());
                         newClient.put("trackFullURL", socket.getTrackFullURL());
                         newClient.put("latitude", socket.getLatitude());
                         newClient.put("longitude", socket.getLongitude());
                         items.add(newClient);
-                    }
+//                    }
                 }
-                server.getBroadcastOperations().sendEvent("updateContent", items.toString());
+                server.getClient(client.getSessionId()).sendEvent("updateContent", items.toString());
+//                server.getBroadcastOperations().sendEvent("updateContent", items.toString());
             }
 
             double measure (double lat1, double lon1, double lat2, double lon2) {
@@ -154,16 +146,15 @@ public class ServerLaunch {
         System.out.println(track);
         JSONObject tmp_track = track.getJSONArray("results").getJSONObject(0);
         SocketInfo socket = new SocketInfo(
-                data.getUser(),
+/*                data.getUser(),
                 "",
                 tmp_track.getString("trackName"),
                 tmp_track.getString("artistName"),
-                tmp_track.getString("artworkUrl100").replaceAll("160", "150"),
-                tmp_track.getString("artworkUrl100").replaceAll("160", "500"),
+                tmp_track.getString("artworkUrl100").replaceAll("160", "300"),
                 tmp_track.getString("previewUrl"),
                 tmp_track.getString("trackViewUrl"),
                 data.getLatitude(),
-                data.getLongitude()
+                data.getLongitude()*/
         );
         soc.add(socket);
     }

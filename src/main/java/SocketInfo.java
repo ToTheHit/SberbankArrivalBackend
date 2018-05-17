@@ -1,10 +1,12 @@
 public class SocketInfo {
     private String user;
     private String nickname;
-    private String trackTitle;
-    private String trackAuthor;
-    private String artwork150; // 150x150
-    private String artwork500; // 500x500
+    private String title;
+    private String artist;
+    private String albumArtist;
+    private String albumTitle;
+    private String genre;
+    private String artwork; // 300x300
     private String trackPreviewURL;
     private String trackFullURL;
     private double latitude;
@@ -13,30 +15,90 @@ public class SocketInfo {
     public SocketInfo() {
     }
 
-    public SocketInfo(String user, String nickname, String trackTitle, String trackAuthor, String artwork150, String artwork500, String trackPreviewURL, String trackFullURL, double latitude, double longitude) {
+    public SocketInfo(String user, String nickname, String title, String artist, String albumArtist, String albumTitle, String genre, String artwork, String trackPreviewURL, String trackFullURL, double latitude, double longitude) {
         super();
         this.user = user;
         this.nickname = nickname;
-        this.trackTitle = trackTitle;
-        this.trackAuthor = trackAuthor;
-        this.artwork150 = artwork150;
-        this.artwork500 = artwork500;
+        this.title = title;
+        this.artist = artist;
+        this.albumArtist = albumArtist;
+        this.albumTitle = albumTitle;
+        this.genre = genre;
+        this.artwork = artwork;
         this.trackPreviewURL = trackPreviewURL;
         this.trackFullURL = trackFullURL;
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
     public String getNickname() {
         return nickname;
     }
+
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getArtist() {
+        return artist;
+    }
+
+    public void setArtist(String artist) {
+        this.artist = artist;
+    }
+
+    public String getAlbumArtist() {
+        return albumArtist;
+    }
+
+    public void setAlbumArtist(String albumArtist) {
+        this.albumArtist = albumArtist;
+    }
+
+    public String getAlbumTitle() {
+        return albumTitle;
+    }
+
+    public void setAlbumTitle(String albumTitle) {
+        this.albumTitle = albumTitle;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public String getArtwork() {
+        return artwork;
+    }
+
+    public void setArtwork(String artwork) {
+        this.artwork = artwork;
     }
 
     public String getTrackPreviewURL() {
         return trackPreviewURL;
     }
+
     public void setTrackPreviewURL(String trackPreviewURL) {
         this.trackPreviewURL = trackPreviewURL;
     }
@@ -44,48 +106,15 @@ public class SocketInfo {
     public String getTrackFullURL() {
         return trackFullURL;
     }
+
     public void setTrackFullURL(String trackFullURL) {
         this.trackFullURL = trackFullURL;
-    }
-
-    public String getArtwork150() {
-        return artwork150;
-    }
-    public void setArtwork150(String artwork150) {
-        this.artwork150 = artwork150;
-    }
-
-    public String getArtwork500() {
-        return artwork500;
-    }
-    public void setArtwork500(String artwork500) {
-        this.artwork500 = artwork500;
-    }
-
-    public String getUser() {
-        return user;
-    }
-    public void setUser(String user) {
-        this.user = user;
-    }
-
-    public String getTrackTitle() {
-        return trackTitle;
-    }
-    public void setTrackTitle(String trackTitle) {
-        this.trackTitle = trackTitle;
-    }
-
-    public String getTrackAuthor() {
-        return trackAuthor;
-    }
-    public void setTrackAuthor(String trackAuthor) {
-        this.trackAuthor = trackAuthor;
     }
 
     public double getLatitude() {
         return latitude;
     }
+
     public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
@@ -93,8 +122,8 @@ public class SocketInfo {
     public double getLongitude() {
         return longitude;
     }
-    public void setLongitube(double longitude) {
+
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 }
-
