@@ -49,7 +49,7 @@ public class ServerLaunch {
 
         // TODO: Написать тестовые сокеты с реальными данными
         for (int i = 1; i< 5; i++) {
-        	SocketInfo socket = new SocketInfo("user"+i, "nickname"+i, "trackTitle"+i, "trackAuthor"+i, "trackArtURL"+i, "trackPreviewURL"+i, "trackFullURL"+i, (double)i,(double)i);
+        	SocketInfo socket = new SocketInfo("user"+i, "nickname"+i, "trackTitle"+i, "trackAuthor"+i, "trackMiniArtURL"+i,"trackArtURL"+i, "trackPreviewURL"+i, "trackFullURL"+i, (double)i,(double)i);
             soc.add(socket);
         }
 
@@ -61,7 +61,7 @@ public class ServerLaunch {
             public void onData(SocketIOClient client, SocketInfo data, AckRequest ackRequest) {
 
                 // Track search
-                // Information about plagin: https://github.com/EtherealT/ItunesSearch
+                // Information about plugin: https://github.com/EtherealT/ItunesSearch
                 tracks = new MediaSearch()
                         .with("Alice Merton No Roots")
                         .inCountry(CountryCode.RU)
@@ -89,7 +89,6 @@ public class ServerLaunch {
         server.addEventListener("updateContent", SocketInfo.class, new DataListener<SocketInfo>() {
             public void onData(SocketIOClient client, SocketInfo data, AckRequest ackRequest) {
                 Collection<JSONObject> items = new ArrayList<JSONObject>();
-
                 for (SocketInfo socket : soc){
 
                     // TODO: реализовать алгоритм фильтрования сокетов по расстоянию.
@@ -102,7 +101,7 @@ public class ServerLaunch {
                     newClient.put("trackPreviewURL", socket.getTrackPreviewURL());
                     newClient.put("trackFullURL", socket.getTrackFullURL());
                     newClient.put("latitube", socket.getLatitude());
-                    newClient.put("longtube", socket.getLongitube());
+                    newClient.put("longitude", socket.getLongitude());
                     items.add(newClient);
                 }
 

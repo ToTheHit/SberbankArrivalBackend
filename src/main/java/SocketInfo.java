@@ -3,26 +3,28 @@ public class SocketInfo {
     private String nickname;
     private String trackTitle;
     private String trackAuthor;
-    private String trackArtURL;
+    private String trackMiniArtURL; // 150x150
+    private String trackArtURL; // 500x500
     private String trackPreviewURL;
     private String trackFullURL;
     private double latitude;
-    private double longitube;
+    private double longitude;
 
     public SocketInfo() {
     }
 
-    public SocketInfo(String user, String nickname, String trackTitle, String trackAuthor, String trackArtURL, String trackPreviewURL, String trackFullURL, double latitude, double longitube) {
+    public SocketInfo(String user, String nickname, String trackTitle, String trackAuthor, String trackMiniArtURL, String trackArtURL, String trackPreviewURL, String trackFullURL, double latitude, double longitude) {
         super();
         this.user = user;
         this.nickname = nickname;
         this.trackTitle = trackTitle;
         this.trackTitle = trackAuthor;
+        this.trackMiniArtURL = trackMiniArtURL;
         this.trackArtURL = trackArtURL;
         this.trackPreviewURL = trackPreviewURL;
         this.trackFullURL = trackFullURL;
         this.latitude = latitude;
-        this.longitube = longitube;
+        this.longitude = longitude;
     }
 
     public String getNickname() {
@@ -44,6 +46,13 @@ public class SocketInfo {
     }
     public void setTrackFullURL(String trackFullURL) {
         this.trackFullURL = trackFullURL;
+    }
+
+    public String getTrackMiniArtURL() {
+        return trackMiniArtURL;
+    }
+    public void setTrackMiniArtURL(String trackMiniArtURL) {
+        this.trackMiniArtURL = trackMiniArtURL;
     }
 
     public String getTrackArtURL() {
@@ -81,11 +90,11 @@ public class SocketInfo {
         this.latitude = latitude;
     }
 
-    public double getLongitube() {
-        return longitube;
+    public double getLongitude() {
+        return longitude;
     }
-    public void setLongitube(double longitube) {
-        this.longitube = longitube;
+    public void setLongitube(double longitude) {
+        this.longitude = longitude;
     }
 
 }
