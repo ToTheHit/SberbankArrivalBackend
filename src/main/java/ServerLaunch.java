@@ -76,6 +76,7 @@ public class ServerLaunch {
                 // TODO: Сделать обработку события, когда поиск ничего не выдал
                 Awaitility.await().until(waitPrepared());
 
+
                 addTrack(tracks, data, soc);
 
                 server.getBroadcastOperations().sendEvent("event", tracks.toString());
