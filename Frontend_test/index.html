@@ -46,8 +46,10 @@
 
 		function sendMessage() {
             var jsonObject = {
-                trackTitle: "No Roots",
-                trackAuthor: "Alice Merton"
+                trackTitle: document.getElementById("track_title").value,
+                trackAuthor: document.getElementById("track_author").value,
+                latitude: document.getElementById('latitude').value,
+                longitude: document.getElementById('longitude').value
             };
             socket.emit('event', jsonObject);
 		}
@@ -66,6 +68,14 @@
 <body>
     <form class="well form-inline" onsubmit="return false;">
         <button type="button" onClick="sendMessage()" class="btn" id="send">Send</button>
+        <div>
+            <input type="text" id="track_author" placeholder="Track author">
+            <input type="text" id="track_title" placeholder="Track title">
+        </div>
+        <div>
+            <input type="number" id="latitude" placeholder="Latitude">
+            <input type="number" id="longitude" placeholder="Longitude">
+        </div>
         <button type="button" onClick="sendDisconnect()" class="btn">Disconnect</button>
         <button type="button" onClick="sendUpdateContent()" class="btn">UpdateContent</button>
     </form>
