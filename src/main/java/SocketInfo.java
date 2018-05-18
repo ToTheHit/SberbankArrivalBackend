@@ -9,13 +9,14 @@ public class SocketInfo {
     private String artwork; // 300x300
     private String trackPreviewURL;
     private String trackFullURL;
+    private String playlist;
     private double latitude;
     private double longitude;
 
     public SocketInfo() {
     }
 
-    public SocketInfo(String user, String nickname, String title, String artist, String albumArtist, String albumTitle, String genre, String artwork, String trackPreviewURL, String trackFullURL, double latitude, double longitude) {
+    public SocketInfo(String user, String nickname, String title, String artist, String albumArtist, String albumTitle, String genre, String artwork, String trackPreviewURL, String trackFullURL, String playlist, double latitude, double longitude) {
         super();
         this.user = user;
         this.nickname = nickname;
@@ -27,6 +28,7 @@ public class SocketInfo {
         this.artwork = artwork;
         this.trackPreviewURL = trackPreviewURL;
         this.trackFullURL = trackFullURL;
+        this.playlist = playlist;
         this.latitude = latitude;
         this.longitude = longitude;
     }
@@ -73,6 +75,14 @@ public class SocketInfo {
 
     public String getAlbumTitle() {
         return albumTitle;
+    }
+
+    public String getPlaylist() {
+        return playlist;
+    }
+
+    public void setPlaylist(String playlist) {
+        this.playlist = playlist;
     }
 
     public void setAlbumTitle(String albumTitle) {

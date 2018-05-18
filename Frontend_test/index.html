@@ -50,6 +50,7 @@
 
 		function sendMessage() {
             var jsonObject = {
+                user: 'User 4',
                 title: document.getElementById("track_title").value,
                 artist: document.getElementById("track_author").value,
                 latitude: document.getElementById('latitude').value,
@@ -60,8 +61,9 @@
 
         function sendUpdateContent() {
             var jsonObject = {
-                latitude: 56.151112,
-                longitude: 44.187214
+                user: 'VkIIT',
+                latitude: 56.35487273475717,
+                longitude: 43.85710877356768
             };
             socket.emit('updateContent', jsonObject);
         }
