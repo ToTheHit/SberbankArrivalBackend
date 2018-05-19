@@ -82,14 +82,13 @@ public class ServerLaunch {
 
                 // Waiting while search is not completed
                 // For the code to run, waitPrepared() must return 'true'
-                // TODO: Сделать обработку события, когда поиск ничего не выдал
                 Awaitility.await().until(waitPrepared(tracks));
 
-
-                deletePreviousTrack(data.getUser(), soc_near);
-                addTrack(tracks, data, soc_near);
-
-                server.getBroadcastOperations().sendEvent("event", tracks.toString());
+               if (tracks.get(tracks.names().getString(0)) != (Object)0) {
+                   deletePreviousTrack(data.getUser(), soc_near);
+                   addTrack(tracks, data, soc_near);
+                   server.getBroadcastOperations().sendEvent("event", tracks.toString());
+               }
             }
 
         });
