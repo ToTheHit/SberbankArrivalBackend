@@ -50,7 +50,7 @@
 
 		function sendMessage() {
             var jsonObject = {
-                user: 'User 4',
+                user: document.getElementById("user_ID").value,
                 title: document.getElementById("track_title").value,
                 artist: document.getElementById("track_author").value,
                 latitude: document.getElementById('latitude').value,
@@ -62,8 +62,8 @@
         function sendUpdateContent() {
             var jsonObject = {
                 user: 'VkIIT',
-                latitude: 56.35487273475717,
-                longitude: 43.85710877356768
+                latitude: 56.132891,
+                longitude: 44.174117
             };
             socket.emit('updateContent', jsonObject);
         }
@@ -77,10 +77,11 @@
         <div>
             <input type="text" id="track_author" placeholder="Track author">
             <input type="text" id="track_title" placeholder="Track title">
+            <input type="text" id="user_ID" placeholder="User ID">
         </div>
         <div>
-            <input type="number" id="latitude" placeholder="Latitude">
-            <input type="number" id="longitude" placeholder="Longitude">
+            <input type="number" id="latitude" placeholder="Latitude" value="56.132891">
+            <input type="number" id="longitude" placeholder="Longitude" value="44.174117">
         </div>
         <button type="button" onClick="sendDisconnect()" class="btn">Disconnect</button>
         <button type="button" onClick="sendUpdateContent()" class="btn">UpdateContent</button>
