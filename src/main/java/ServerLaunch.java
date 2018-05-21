@@ -25,7 +25,6 @@ import sun.misc.Unsafe;
 
 
 public class ServerLaunch {
-    final static int maxDistance = 100;
     public static void disableWarning() {
         try {
             Field theUnsafe = Unsafe.class.getDeclaredField("theUnsafe");
@@ -44,12 +43,20 @@ public class ServerLaunch {
         // Clear warnings in console.
         // TODO: Разобраться в причине предупреждений
         disableWarning();
-        System.out.println("1");
         // Create configuration for socket-server
         Configuration config = new Configuration();
-        config.setHostname("localhost");
-        config.setPort(3333);
+        config.setHostname("0.0.0.0");
 
+        if (args.length == 0) {
+            config.setPort(3333);
+        }
+        else if (args.length == 1){
+            config.setPort(Integer.parseInt(args[0]));
+        }
+        else if (args.length == 2){
+            config.setPort(Integer.parseInt(args[0]));
+            Globals.maxDistance = Integer.parseInt(args[1]);
+        }
         // A list in which stored sockets of songs which are being played near user
         final ArrayList<SocketInfo> soc_near = new ArrayList<SocketInfo>();
 
@@ -62,19 +69,17 @@ public class ServerLaunch {
         soc_near.add(socket2);
         SocketInfo socket3 = new SocketInfo("User 3", "", "Got Me Thinking (feat. Veela)", "Maduk", "", "", "", "https://is4-ssl.mzstatic.com/image/thumb/Music71/v4/3b/c1/49/3bc149c4-c827-d5c6-eb09-0c830acf0a05/source/300x300bb.jpg", "https://audio-ssl.itunes.apple.com/apple-assets-us-std-000001/AudioPreview71/v4/be/4d/a2/be4da28f-be61-6930-50aa-ae70c4b59096/mzaf_5872772549499558060.plus.aac.p.m4a", "https://itunes.apple.com/ru/album/got-me-thinking-feat-veela/1179453307?i=1179453661&l=en&uo=4", "near", 56.132891, 44.174117);
         soc_near.add(socket3);
-        System.out.println("2");
 
         //Add popular tracks in RU region when server starts
         addRegionalTracks(soc_region);
-        System.out.println("3");
 
         // Create socket-server
         final SocketIOServer server = new SocketIOServer(config);
-        System.out.println("4");
 
         server.addEventListener("event", SocketInfo.class, new DataListener<SocketInfo>() {
             JSONObject tracks = new JSONObject();
             public void onData(SocketIOClient client, SocketInfo data, AckRequest ackRequest) {
+                System.out.println("-> New track");
                 if (client.get("userID") == null) {
                     client.set("userID", data.getUser());
                 }
@@ -103,6 +108,7 @@ public class ServerLaunch {
 
         server.addEventListener("updateContent", SocketInfo.class, new DataListener<SocketInfo>() {
             public void onData(SocketIOClient client, SocketInfo data, AckRequest ackRequest) {
+                System.out.println("-> Update content");
                 Collection<JSONObject> items = new ArrayList<JSONObject>();
                 for (SocketInfo socket : soc_near) {
                     if (data.getUser().equals(socket.getUser())) {
@@ -111,7 +117,7 @@ public class ServerLaunch {
 
                     double distance = measure(socket.getLatitude(), socket.getLongitude(), data.getLatitude(), data.getLongitude());
 
-                    if (distance < maxDistance) {
+                    if (distance < Globals.maxDistance) {
                         JSONObject newClient = new JSONObject();
                         newClient.put("user", socket.getUser());
                         newClient.put("nickname", socket.getNickname());
@@ -170,6 +176,30 @@ public class ServerLaunch {
             }
         });
 
+        server.addEventListener("getAll", SocketInfo.class, new DataListener<SocketInfo>() {
+            public void onData(SocketIOClient client, SocketInfo socketInfo, AckRequest ackRequest) throws Exception {
+                Collection<JSONObject> items = new ArrayList<JSONObject>();
+                for (SocketInfo socket : soc_near) {
+                        JSONObject newClient = new JSONObject();
+                        newClient.put("user", socket.getUser());
+                        newClient.put("nickname", socket.getNickname());
+                        newClient.put("title", socket.getTitle());
+                        newClient.put("artist", socket.getArtist());
+                        newClient.put("albumArtist", socket.getArtist());
+                        newClient.put("albumTitle", socket.getAlbumTitle());
+                        newClient.put("genre", socket.getGenre());
+                        newClient.put("artwork", socket.getArtwork());
+                        newClient.put("trackPreviewURL", socket.getTrackPreviewURL());
+                        newClient.put("trackFullURL", socket.getTrackFullURL());
+                        newClient.put("playlist", socket.getPlaylist());
+                        newClient.put("latitude", socket.getLatitude());
+                        newClient.put("longitude", socket.getLongitude());
+                        items.add(newClient);
+                }
+                server.getClient(client.getSessionId()).sendEvent("getAllTracks", items.toString());
+            }
+        });
+
         server.addEventListener("disconnect", SocketInfo.class, new DataListener<SocketInfo>() {
             public void onData(SocketIOClient client, SocketInfo data, AckRequest ackRequest) {
                 client.disconnect();
@@ -179,12 +209,13 @@ public class ServerLaunch {
 
         server.addConnectListener(new ConnectListener() {
             public void onConnect(SocketIOClient client) {
-
+                System.out.println("Socket connect. Count: "+server.getAllClients().size());
             }
         });
 
         server.addDisconnectListener(new DisconnectListener() {
             public void onDisconnect(SocketIOClient client) {
+                System.out.println("Socket disconnect. Count: "+server.getAllClients().size());
                 if (client.get("userID") != null) {
                     System.out.println("Disconnect ID: " + client.get("userID"));
                     deletePreviousTrack(client.get("userID").toString(), soc_near);
@@ -193,7 +224,6 @@ public class ServerLaunch {
         });
 
         server.start();
-        System.out.println("5");
 
         Thread.sleep(Integer.MAX_VALUE);
 
@@ -277,8 +307,8 @@ public class ServerLaunch {
             socket.setAlbumTitle(single_hot_track.getString("collectionName"));
             socket.setGenre(single_hot_track.getJSONArray("genres").getJSONObject(0).getString("name"));
             socket.setArtwork(single_hot_track.getString("artworkUrl100").replaceAll("100", "300"));
-//            socket.setTrackPreviewURL(tmp_track.getJSONArray("results").getJSONObject(0).getString("previewUrl"));
-            socket.setTrackPreviewURL("");
+            socket.setTrackPreviewURL(tmp_track.getJSONArray("results").getJSONObject(0).getString("previewUrl"));
+//            socket.setTrackPreviewURL("");
             socket.setTrackFullURL(single_hot_track.getString("url"));
             socket.setPlaylist("regional");
             socket.setLatitude(-1);
@@ -297,3 +327,5 @@ public class ServerLaunch {
         };
     }
 }
+
+
