@@ -7,6 +7,7 @@ import java.util.concurrent.Callable;
 
 import com.corundumstudio.socketio.listener.ConnectListener;
 import com.corundumstudio.socketio.listener.DisconnectListener;
+import me.tobiadeyinka.itunessearch.entities.ReturnLanguage;
 import me.tobiadeyinka.itunessearch.lookup.MusicLookup;
 import me.tobiadeyinka.itunessearch.search.MusicSearch;
 import org.awaitility.Awaitility;
@@ -79,7 +80,6 @@ public class ServerLaunch {
         server.addEventListener("addTrack", SocketInfo.class, new DataListener<SocketInfo>() {
             JSONObject tracks = new JSONObject();
             public void onData(SocketIOClient client, SocketInfo data, AckRequest ackRequest) {
-                System.out.println("-> New track");
                 if (client.get("userID") == null) {
                     client.set("userID", data.getUser());
                 }
@@ -89,6 +89,7 @@ public class ServerLaunch {
                 tracks = new MusicSearch()
                         .with(data.getArtist() + " " + data.getTitle())
                         .inCountry(CountryCode.RU)
+                        .withReturnLanguage(ReturnLanguage.JAPANESE)
                         .withLimit(1)
                         .execute();
 
@@ -99,6 +100,7 @@ public class ServerLaunch {
                if (tracks.get(tracks.names().getString(0)) != (Object)0) {
                    deletePreviousTrack(data.getUser(), soc_near);
                    addTrack(tracks, data, soc_near);
+                   System.out.println("-> New track: "+tracks.getJSONArray("results").getJSONObject(0).getString("artistName")+" - "+tracks.getJSONArray("results").getJSONObject(0).getString("trackName"));
 
                    server.getBroadcastOperations().sendEvent("addTrack", tracks.toString());
                }
@@ -310,7 +312,6 @@ public class ServerLaunch {
             socket.setGenre(single_hot_track.getJSONArray("genres").getJSONObject(0).getString("name"));
             socket.setArtwork(single_hot_track.getString("artworkUrl100").replaceAll("100", "300"));
             socket.setTrackPreviewURL(tmp_track.getJSONArray("results").getJSONObject(0).getString("previewUrl"));
-//            socket.setTrackPreviewURL("");
             socket.setTrackFullURL(single_hot_track.getString("url"));
             socket.setPlaylist("regional");
             socket.setLatitude(-1);
