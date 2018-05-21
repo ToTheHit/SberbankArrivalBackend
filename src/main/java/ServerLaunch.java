@@ -76,7 +76,7 @@ public class ServerLaunch {
         // Create socket-server
         final SocketIOServer server = new SocketIOServer(config);
 
-        server.addEventListener("event", SocketInfo.class, new DataListener<SocketInfo>() {
+        server.addEventListener("addTrack", SocketInfo.class, new DataListener<SocketInfo>() {
             JSONObject tracks = new JSONObject();
             public void onData(SocketIOClient client, SocketInfo data, AckRequest ackRequest) {
                 System.out.println("-> New track");
@@ -100,7 +100,7 @@ public class ServerLaunch {
                    deletePreviousTrack(data.getUser(), soc_near);
                    addTrack(tracks, data, soc_near);
 
-                   server.getBroadcastOperations().sendEvent("event", tracks.toString());
+                   server.getBroadcastOperations().sendEvent("addTrack", tracks.toString());
                }
                else System.out.println("MediaSearch: Nothing found");
             }
@@ -112,6 +112,8 @@ public class ServerLaunch {
                 Collection<JSONObject> items = new ArrayList<JSONObject>();
                 for (SocketInfo socket : soc_near) {
                     if (data.getUser().equals(socket.getUser())) {
+                        socket.setLatitude(data.getLatitude());
+                        socket.setLongitude(data.getLongitude());
                         continue;
                     }
 
