@@ -40,7 +40,7 @@ public class ServerLaunch {
         }
     }
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws Exception {
         // Clear warnings in console.
         // TODO: Разобраться в причине предупреждений
         disableWarning();
@@ -64,12 +64,16 @@ public class ServerLaunch {
         // A list in which stored sockets of popular in region songs
         final ArrayList<SocketInfo> soc_region = new ArrayList<SocketInfo>();
 
-        SocketInfo socket1 = new SocketInfo("VkIIT", "", "Gucci Gang", "Lil Pump", "", "", "", "https://is2-ssl.mzstatic.com/image/thumb/Music128/v4/17/13/93/171393f6-a2cc-aa0e-c5af-fe63a160a0b3/source/300x300bb.jpg", "https://audio-ssl.itunes.apple.com/apple-assets-us-std-000001/AudioPreview118/v4/8c/1a/b3/8c1ab302-b814-e148-b249-b16d3566121d/mzaf_1290930189139201618.plus.aac.p.m4a", "https://itunes.apple.com/ru/album/gucci-gang/1292381888?i=1292381954&l=en&uo=4", "near", 56.132891, 44.174117);
+        SocketInfo socket1 = new SocketInfo("User 1", "", "В Питере - пить", "Ленинград", "Ленинград", "В Питере - пить - Single", "Рок", "https://is2-ssl.mzstatic.com/image/thumb/Music60/v4/f4/f9/66/f4f966c8-ec3e-73d4-97fd-fddad347f59d/source/300x300bb.jpg", "https://audio-ssl.itunes.apple.com/apple-assets-us-std-000001/AudioPreview30/v4/da/91/b8/da91b895-83d9-3f26-a0f2-ff1659db4e83/mzaf_5172019951187949608.plus.aac.p.m4a", "https://itunes.apple.com/ru/album/%D0%B2-%D0%BF%D0%B8%D1%82%D0%B5%D1%80%D0%B5-%D0%BF%D0%B8%D1%82%D1%8C/1107863720?i=1107864143&uo=4", "near", 56.324232, 44.030892);
         soc_near.add(socket1);
-        SocketInfo socket2 = new SocketInfo("User 2", "", "Esskeetit", "Lil Pump", "", "", "", "https://is4-ssl.mzstatic.com/image/thumb/Music128/v4/7b/77/7f/7b777f07-d973-6163-375a-400f77eae771/source/300x150bb.jpg", "https://audio-ssl.itunes.apple.com/apple-assets-us-std-000001/AudioPreview118/v4/d9/c0/e8/d9c0e81a-c7da-ebbb-2557-fd7c63749110/mzaf_7518946094717781395.plus.aac.p.m4a", "https://itunes.apple.com/ru/album/esskeetit/1370438300?i=1370438305&l=en&uo=4", "near", 56.132891, 44.174117);
+        SocketInfo socket2 = new SocketInfo("User 2", "", "Party Like a Russian", "Robbie Williams", "Robbie Williams", "The Heavy Entertainment Show (Deluxe)", "Поп-музыка", "https://is5-ssl.mzstatic.com/image/thumb/Music62/v4/a7/28/b5/a728b592-b3dd-f968-b1dc-a9ac901ac257/source/300x300bb.jpg", "https://audio-ssl.itunes.apple.com/apple-assets-us-std-000001/AudioPreview62/v4/eb/aa/d0/ebaad0ba-cbed-f548-96a9-ffc79e3a59ce/mzaf_1599664002516820993.plus.aac.p.m4a", "https://itunes.apple.com/ru/album/party-like-a-russian/1156851310?i=1156851520&uo=4", "near", 56.324333, 44.030962 );
         soc_near.add(socket2);
-        SocketInfo socket3 = new SocketInfo("User 3", "", "Got Me Thinking (feat. Veela)", "Maduk", "", "", "", "https://is4-ssl.mzstatic.com/image/thumb/Music71/v4/3b/c1/49/3bc149c4-c827-d5c6-eb09-0c830acf0a05/source/300x300bb.jpg", "https://audio-ssl.itunes.apple.com/apple-assets-us-std-000001/AudioPreview71/v4/be/4d/a2/be4da28f-be61-6930-50aa-ae70c4b59096/mzaf_5872772549499558060.plus.aac.p.m4a", "https://itunes.apple.com/ru/album/got-me-thinking-feat-veela/1179453307?i=1179453661&l=en&uo=4", "near", 56.132891, 44.174117);
+        SocketInfo socket3 = new SocketInfo("User 3", "", "No Roots", "Alice Merton", "Alice Merton", "No Roots - Single", "Альтернативная музыка", "https://is1-ssl.mzstatic.com/image/thumb/Music118/v4/19/60/01/19600112-1dfc-96a7-74bf-c9740e6fbc39/source/300x300bb.jpg", "https://audio-ssl.itunes.apple.com/apple-assets-us-std-000001/AudioPreview128/v4/a5/ac/d2/a5acd2cd-204d-b105-287d-32d70f27dc28/mzaf_2704331413308334440.plus.aac.p.m4a", "https://itunes.apple.com/ru/album/no-roots/1264771986?i=1264771989&uo=4", "near", 56.324432, 44.030597);
         soc_near.add(socket3);
+        SocketInfo socket4 = new SocketInfo("User 4", "", "Бомба", "Ленинград", "Ленинград", "Бомба - Single", "Рок", "https://is1-ssl.mzstatic.com/image/thumb/Music1/v4/eb/a5/e4/eba5e428-26a1-bed0-d23c-20119447b969/source/300x300bb.jpg", "https://audio-ssl.itunes.apple.com/apple-assets-us-std-000001/Music5/v4/d1/e3/97/d1e397bf-7a9d-c841-31cc-be7769761841/mzaf_7438514052279884277.plus.aac.p.m4a", "https://itunes.apple.com/ru/album/%D0%B1%D0%BE%D0%BC%D0%B1%D0%B0/994156511?i=994156512&uo=4", "near", 56.324151, 44.031713);
+        soc_near.add(socket4);
+        SocketInfo socket5 = new SocketInfo("User 5", "", "Bon Appétit (feat. Migos)", "Katy Perry", "Katy Perry", "Witness", "Поп-музыка", "https://is4-ssl.mzstatic.com/image/thumb/Music117/v4/f5/89/15/f5891541-f666-7bc3-5e7e-de5c87a664e5/source/300x300bb.jpg", "https://audio-ssl.itunes.apple.com/apple-assets-us-std-000001/AudioPreview127/v4/38/2b/32/382b325d-2138-264b-1a49-329e666713c4/mzaf_7896431060259967753.plus.aac.p.m4a", "https://itunes.apple.com/ru/album/bon-app%C3%A9tit-feat-migos/1236471560?i=1236471571&uo=4", "near", 56.324560, 44.030141);
+        soc_near.add(socket5);
 
         //Add popular tracks in RU region when server starts
         addRegionalTracks(soc_region);
@@ -120,7 +124,7 @@ public class ServerLaunch {
                     }
 
                     double distance = measure(socket.getLatitude(), socket.getLongitude(), data.getLatitude(), data.getLongitude());
-
+//                    System.out.println("  "+distance);
                     if (distance < Globals.maxDistance) {
                         JSONObject newClient = new JSONObject();
                         newClient.put("user", socket.getUser());
@@ -200,6 +204,8 @@ public class ServerLaunch {
                         newClient.put("longitude", socket.getLongitude());
                         items.add(newClient);
                 }
+
+
                 server.getClient(client.getSessionId()).sendEvent("getAllTracks", items.toString());
             }
         });
@@ -267,7 +273,7 @@ public class ServerLaunch {
     }
 
 
-    static void addRegionalTracks(ArrayList<SocketInfo> soc_region) throws InterruptedException {
+    static void addRegionalTracks(ArrayList<SocketInfo> soc_region) throws Exception {
         new JSONObject();
         JSONObject tmp_track;
 
@@ -276,31 +282,11 @@ public class ServerLaunch {
 
         hot_tracks = MusicLookup.topSongs(CountryCode.RU, 8);
         Awaitility.await().until(waitPrepared(hot_tracks));
-        for (int i = 0; i < 8; i++) {
-            //System.out.println(hot_tracks.getJSONObject("feed").getJSONArray("results").getJSONObject(i));
-            JSONObject single_hot_track = hot_tracks.getJSONObject("feed").getJSONArray("results").getJSONObject(i);
 
-            tmp_track = new MusicSearch()
-                    .with(single_hot_track.getString("artistName") + " " + single_hot_track.getString("name"))
-                    .inCountry(CountryCode.RU)
-                    .withLimit(1)
-                    .execute();
+        for (int i = 0; i < 8; i++) {
+            JSONObject single_hot_track = hot_tracks.getJSONObject("feed").getJSONArray("results").getJSONObject(i);
+            tmp_track = MusicLookup.getSongById(Integer.parseInt(single_hot_track.getString("id")));
             Awaitility.await().until(waitPrepared(tmp_track));
-/*            SocketInfo socket = new SocketInfo(
-                    "",
-                    "",
-                    single_hot_track.getString("name"),
-                    single_hot_track.getString("artistName"),
-                    single_hot_track.getString("artistName"),
-                    single_hot_track.getString("collectionName"),
-                    single_hot_track.getJSONArray("genres").getJSONObject(0).getString("name"),
-                    single_hot_track.getString("artworkUrl100").replaceAll("100", "300"),
-                    tmp_track.getJSONArray("results").getJSONObject(0).getString("previewUrl"),
-                    single_hot_track.getString("url"),
-                    "regional",
-                    -1,
-                    -1
-            );*/
 
             SocketInfo socket = new SocketInfo();
             socket.setUser("");
@@ -312,7 +298,7 @@ public class ServerLaunch {
             socket.setGenre(single_hot_track.getJSONArray("genres").getJSONObject(0).getString("name"));
             socket.setArtwork(single_hot_track.getString("artworkUrl100").replaceAll("100", "300"));
             socket.setTrackPreviewURL(tmp_track.getJSONArray("results").getJSONObject(0).getString("previewUrl"));
-            socket.setTrackFullURL(single_hot_track.getString("url"));
+            socket.setTrackFullURL(single_hot_track.getString("url").replaceAll("app=itunes", ""));
             socket.setPlaylist("regional");
             socket.setLatitude(-1);
             socket.setLongitude(-1);
@@ -330,5 +316,3 @@ public class ServerLaunch {
         };
     }
 }
-
-
