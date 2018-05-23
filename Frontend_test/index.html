@@ -20,13 +20,13 @@
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 
 	<script>
-		var socket =  io.connect('http://localhost:9092');
+		var socket =  io.connect('http://localhost:3333');
 
 		socket.on('connect', function() {
 			console.log('socket is connected');
 		});
 
-		socket.on('event', function(data) {
+		socket.on('addTrack', function(data) {
 			console.log(JSON.parse(data));
 			//console.log(data);
 		});
@@ -37,7 +37,17 @@
 
 		socket.on('updateContent', function(data) {
 		    console.log(JSON.parse(data));
+		    //console.log(data);
 		});
+
+        socket.on('getAllTracks', function(data) {
+		    console.log(JSON.parse(data));
+		    //console.log(data);
+		});
+
+        socket.on('getRegional', function(data) {
+            console.log(JSON.parse(data));
+        });
 
         function sendDisconnect() {
             socket.emit('disconnect', "");
@@ -46,20 +56,31 @@
 
 		function sendMessage() {
             var jsonObject = {
-                trackTitle: document.getElementById("track_title").value,
-                trackAuthor: document.getElementById("track_author").value,
+                user: document.getElementById("user_ID").value,
+                title: document.getElementById("track_title").value,
+                artist: document.getElementById("track_author").value,
                 latitude: document.getElementById('latitude').value,
                 longitude: document.getElementById('longitude').value
             };
-            socket.emit('event', jsonObject);
+            socket.emit('addTrack', jsonObject);
 		}
 
         function sendUpdateContent() {
             var jsonObject = {
-                latitude: 56.151112,
-                longitude: 44.187214
+                user: document.getElementById("user_ID").value,
+                latitude: document.getElementById('latitude').value,
+                longitude: document.getElementById('longitude').value
             };
             socket.emit('updateContent', jsonObject);
+        }
+
+        function getAllTracks() {
+            var jsonObject = {
+                user: document.getElementById("user_ID").value,
+                latitude: 56.132891,
+                longitude: 44.174117
+            };
+            socket.emit('getAll', jsonObject);
         }
 
 	</script>
@@ -71,13 +92,16 @@
         <div>
             <input type="text" id="track_author" placeholder="Track author">
             <input type="text" id="track_title" placeholder="Track title">
+            <input type="text" id="user_ID" placeholder="User ID">
         </div>
         <div>
-            <input type="number" id="latitude" placeholder="Latitude">
-            <input type="number" id="longitude" placeholder="Longitude">
+            <input type="number" id="latitude" placeholder="Latitude" value="56.35490518314614">
+            <input type="number" id="longitude" placeholder="Longitude" value="43.857195289351665">
         </div>
         <button type="button" onClick="sendDisconnect()" class="btn">Disconnect</button>
         <button type="button" onClick="sendUpdateContent()" class="btn">UpdateContent</button>
+        <button type="button" onClick="getAllTracks()" class="btn">GetAllTracks</button>
+
     </form>
 </body>
 
