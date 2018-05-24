@@ -8,6 +8,7 @@ import java.util.concurrent.Callable;
 import com.corundumstudio.socketio.listener.ConnectListener;
 import com.corundumstudio.socketio.listener.DisconnectListener;
 import me.tobiadeyinka.itunessearch.entities.ReturnLanguage;
+import me.tobiadeyinka.itunessearch.exceptions.NoMatchFoundException;
 import me.tobiadeyinka.itunessearch.lookup.MusicLookup;
 import me.tobiadeyinka.itunessearch.search.MusicSearch;
 import org.awaitility.Awaitility;
@@ -280,30 +281,38 @@ public class ServerLaunch {
         new JSONObject();
         JSONObject hot_tracks;
 
-        hot_tracks = MusicLookup.topSongs(CountryCode.RU, 8);
+        hot_tracks = MusicLookup.hotTracks(CountryCode.RU, 15);
         Awaitility.await().until(waitPrepared(hot_tracks));
 
-        for (int i = 0; i < 8; i++) {
-            JSONObject single_hot_track = hot_tracks.getJSONObject("feed").getJSONArray("results").getJSONObject(i);
-            tmp_track = MusicLookup.getSongById(Integer.parseInt(single_hot_track.getString("id")));
-            Awaitility.await().until(waitPrepared(tmp_track));
+        int i = 0, j = 0;
+        while(i < 8) {
+            JSONObject single_hot_track = hot_tracks.getJSONObject("feed").getJSONArray("results").getJSONObject(j);
+            try {
+                tmp_track = MusicLookup.getSongById(Integer.parseInt(single_hot_track.getString("id")));
+                Awaitility.await().until(waitPrepared(tmp_track));
 
-            SocketInfo socket = new SocketInfo();
-            socket.setUser("");
-            socket.setNickname("");
-            socket.setTitle(single_hot_track.getString("name"));
-            socket.setArtist(single_hot_track.getString("artistName"));
-            socket.setAlbumArtist(single_hot_track.getString("artistName"));
-            socket.setAlbumTitle(single_hot_track.getString("collectionName"));
-            socket.setGenre(single_hot_track.getJSONArray("genres").getJSONObject(0).getString("name"));
-            socket.setArtwork(single_hot_track.getString("artworkUrl100").replaceAll("100", "300"));
-            socket.setTrackPreviewURL(tmp_track.getJSONArray("results").getJSONObject(0).getString("previewUrl"));
-            socket.setTrackFullURL(single_hot_track.getString("url").replaceAll("app=itunes", ""));
-            socket.setPlaylist("regional");
-            socket.setLatitude(-1);
-            socket.setLongitude(-1);
+                SocketInfo socket = new SocketInfo();
+                socket.setUser("");
+                socket.setNickname("");
+                socket.setTitle(single_hot_track.getString("name"));
+                socket.setArtist(single_hot_track.getString("artistName"));
+                socket.setAlbumArtist(single_hot_track.getString("artistName"));
+                socket.setAlbumTitle(single_hot_track.getString("collectionName"));
+                socket.setGenre(single_hot_track.getJSONArray("genres").getJSONObject(0).getString("name"));
+                socket.setArtwork(single_hot_track.getString("artworkUrl100").replaceAll("100", "300"));
+                socket.setTrackPreviewURL(tmp_track.getJSONArray("results").getJSONObject(0).getString("previewUrl"));
+                socket.setTrackFullURL(single_hot_track.getString("url").replaceAll("app=itunes", ""));
+                socket.setPlaylist("regional");
+                socket.setLatitude(-1);
+                socket.setLongitude(-1);
 
-            soc_region.add(socket);
+                soc_region.add(socket);
+                i++;
+            }
+            catch (NoMatchFoundException e) {
+                //If somehow there is no song with the recently found id
+            }
+            j++;
         }
     }
 
